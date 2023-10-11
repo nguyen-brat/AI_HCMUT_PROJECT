@@ -1,0 +1,2 @@
+Ngành Khoa học máy tính (KHMT) có phân ngành không
+Ngành Khoa học Máy tính có một chuyên ngành mặc định cùng tên (KHMT), ngoài ra có 5 chuyên ngành khác là 1) Khoa học Máy tính, 2) Công nghệ dữ liệu bảo mật & trí tuệ kinh doanh, 3) Công nghệ phần mềm, 4) Mật mã và an ninh mạng, 5) Trí tuệ nhân tạo và ứng dụng, 6) Xử lý ảnh và Thị giác máy tính

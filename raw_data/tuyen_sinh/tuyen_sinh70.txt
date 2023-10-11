@@ -1,0 +1,2 @@
+Giờ giấc học ở trường mình như thế nào
+Mỗi sinh viên sẽ có thời khóa biểu riêng tùy theo các môn học đã đăng ký. Các môn học sẽ được sắp trong khung giờ 7-12 giờ buổi sáng và 1-6 giờ buổi chiều
