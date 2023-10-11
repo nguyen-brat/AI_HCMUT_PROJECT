@@ -12,6 +12,7 @@ class DocIR:
             reset=False
     ):
         self.data_paths = glob(data_path)
+        self.data_paths.sort()
         self.data_content = []
         for data in self.data_paths:
             with open(data, 'r') as f:
