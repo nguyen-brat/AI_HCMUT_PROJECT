@@ -21,4 +21,4 @@ class Inference:
         joint_information = '\n'.join(informations)
         answer = self.llm(question=question, contexts=joint_information)
         answer = self.translator.translate(answer ,src='en' ,dest='vi').text
-        return informations
+        return answer, informations
