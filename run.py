@@ -1,11 +1,12 @@
 from llm import LlmInference
 from retrieval.tfidf import DocIR
 import googletrans
+import streamlit as st
 
 class Inference:
     def __init__(
             self,
-            url = "https://bahnar.dscilab.com:20007/llama/api",
+            url = st.secrets['API_KEY'],
             header = {"Content-Type": "application/json"},
             data_path='raw_data/*/*.txt',
             output_path='retrieval/saved',
