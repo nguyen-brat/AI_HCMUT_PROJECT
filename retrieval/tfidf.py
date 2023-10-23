@@ -24,7 +24,7 @@ class DocIR:
                 os.remove(file_name)
             os.remove(output_path) 
 
-        if not os.path.exists(output_path):
+        if not os.path.exists(output_path+'/tfidf_vectorizer.pkl'):
             self.vectorizer = TfidfVectorizer(input='content', ngram_range = (1, 3), token_pattern=r"(?u)\b[\w\d]+\b")
             self.corpus_vectorize = self.vectorizer.fit_transform(self.data_content)
             self.save(output_path=output_path)

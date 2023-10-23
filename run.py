@@ -6,7 +6,7 @@ import streamlit as st
 class Inference:
     def __init__(
             self,
-            url = st.secrets['API_KEY'],
+            url = "https://bahnar.dscilab.com:20007/llama/api",
             header = {"Content-Type": "application/json"},
             data_path='raw_data/*/*.txt',
             output_path='retrieval/saved',
@@ -20,5 +20,5 @@ class Inference:
         informations = self.doc_retrieval(query=question)
         joint_information = '\n'.join(informations)
         answer = self.llm(question=question, contexts=joint_information)
-        answer = self.translator.translate(answer ,src='en' ,dest='vi').text
+        #answer = self.translator.translate(answer ,src='en' ,dest='vi').text
         return answer, informations
