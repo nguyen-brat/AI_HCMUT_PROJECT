@@ -5,7 +5,12 @@ import pickle
 import os
 import re
 from sentence_transformers import CrossEncoder
+import torch
 
+def softmax(x):
+    """Compute softmax values for each sets of scores in x."""
+    e_x = np.exp(x - np.max(x))
+    return e_x / e_x.sum()
 
 class DocIR:
     def __init__(
@@ -20,6 +25,7 @@ class DocIR:
         for data in self.data_paths:
             with open(data, 'r') as f:
                 self.data_content.append(self.clean(f.read()))
+        self.reranking_model = CrossEncoder('amberoad/bert-multilingual-passage-reranking-msmarco', num_labels=2, max_length=512, device='cpu')
         
         if reset:
             all_file_paths = glob(output_path + '/*')
@@ -49,7 +55,24 @@ class DocIR:
         for index in top_index:
             with open(self.data_paths[index], 'r') as f:
                 result.append(f.read())
-        return result
+        rerank_answer = self.reranking_inference(query, result)
+        return rerank_answer
+    
+    def reranking_inference(self, claim:str, fact_list):
+        '''
+        take claim and list of fact list
+        return reranking fact list and score of them
+        '''
+        reranking_score = []
+        for fact in fact_list:
+            pair = [claim, fact]
+            with torch.no_grad():
+                result = softmax(self.reranking_model.predict(pair))[1]
+            reranking_score.append(result)
+        sort_index = np.argsort(np.array(reranking_score))
+        reranking_answer = list(np.array(fact_list)[sort_index])
+        reranking_answer.reverse()
+        return reranking_answer
     
     def save(self, output_path='retrieval/saved'):
         if not os.path.exists(output_path):
