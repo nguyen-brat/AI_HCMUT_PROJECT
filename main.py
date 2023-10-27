@@ -12,7 +12,7 @@ if __name__ == '__main__':
         answer, information = inference(question)
         st.write('Câu trả lời là:')
         st.write(f'{answer}')
-        st.header('Các tài liệu liên quan được tìm thấy:', divider='rainbow')
+        # st.header('Các tài liệu liên quan được tìm thấy:', divider='rainbow')
         # first_doc, second_doc, third_doc = st.columns(3)
         # with first_doc:
         #     st.write(f'{information[0]}')
