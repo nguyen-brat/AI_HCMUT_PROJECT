@@ -12,7 +12,7 @@ class LlmInference:
         self.header = header
 
     def __call__(self, question, contexts):
-        contexts = ' '.join(contexts.split()[:2000])
+        #contexts = ' '.join(contexts.split()[:2000])
         info = {
             "prompt": f'''[INST] <<SYS>> Trả lời câu hỏi đưa ra dựa vào văn bản được cung cấp. Nếu bạn không tìm thấy thông tin trong văn bản, hãy trả lời "không có thông tin liên quan được tìm thấy".<</SYS>>
 Câu hỏi:```{question}```
