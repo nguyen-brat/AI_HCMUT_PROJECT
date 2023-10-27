@@ -63,8 +63,7 @@ class DocIR:
     def clean(text):
         text = re.sub(r'\n+', r'.', text)
         text = re.sub(r'\.+', r' . ', text)
-        text = re.sub(r"['\",\?:\-!-]", "", text)
+        #text = re.sub(r"['\",\?:\-!-]", "", text)
         text = text.strip()
         text = " ".join(text.split())
-        text = text.lower()
         return text

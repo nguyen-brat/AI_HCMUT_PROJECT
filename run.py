@@ -18,6 +18,7 @@ class Inference:
 
     def __call__(self, question):
         informations = self.doc_retrieval(query=question)
+        print(informations)
         joint_information = '\n'.join(informations)
         answer = self.llm(question=question, contexts=joint_information)
         #answer = self.translator.translate(answer ,src='en' ,dest='vi').text
