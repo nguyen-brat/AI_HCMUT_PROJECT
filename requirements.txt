@@ -1,7 +1,4 @@
 numpy
 Requests
 scikit_learn
-sentence_transformers
 streamlit
-torch
-transformers

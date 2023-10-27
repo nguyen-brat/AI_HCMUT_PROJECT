@@ -1,6 +1,7 @@
 import requests
 import json
 import streamlit as st
+import re
 
 class LlmInference:
     def __init__(
@@ -23,7 +24,9 @@ Trả lời: [/INST]''',
         resp = requests.post(self.url, headers = self.header, data=json.dumps(info))
         print(resp)
         data = json.loads(resp.content)
-        return data['answer']
+        answer = data['answer']
+        answer = re.sub(r'./+', '', answer)
+        return answer
 ''' Yeu cau
 
 Văn bản:
