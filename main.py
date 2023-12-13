@@ -4,8 +4,8 @@ from run import Inference
 import requests
 import json
 
-email = "nguyen.nguyenkhoi@hcmut.edu.vn"#os.environ["mail"]
-password = "Kim@2972003"#os.environ["password"]
+email = ''
+password = ''
 
 URL = "https://www.ura.hcmut.edu.vn/ura-llama/login"
 headers  = {"Content-Type": "application/json"}
