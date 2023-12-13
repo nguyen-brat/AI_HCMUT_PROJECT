@@ -4,10 +4,9 @@ import numpy as np
 import pickle
 import os
 import re
-from sentence_transformers import CrossEncoder
+from sklearn.metrics.pairwise import cosine_similarity
 
-
-class DocIR:
+class SparseRetrieval:
     def __init__(
             self,
             data_path='raw_data/*/*.txt',
@@ -39,17 +38,30 @@ class DocIR:
 
     def retrieval_(self, query, k=3):
         query_vector = self.vectorizer.transform([self.clean(query)])
-        similar = query_vector.dot(self.corpus_vectorize.T).toarray()[0]
+        similar = cosine_similarity(query_vector, self.corpus_vectorize)[0]
         sort_index = np.argsort(similar)[::-1][:k]
-        return sort_index
+        return sort_index, similar
     
     def __call__(self, query, k=3):
-        top_index = self.retrieval_(query=query, k=k)
+        top_index, _ = self.retrieval_(query=self.clean(query), k=5)
         result = []
         for index in top_index:
             with open(self.data_paths[index], 'r') as f:
                 result.append(f.read())
-        return result
+        return result[:k]
+    
+    @staticmethod
+    def clean(text):
+        for match in re.finditer(r"(\d\.\d|)(\w\.\w)", text):
+            text = text[:match.span()[0]+1] + '|' + text[match.span()[1]-1:]
+        text = re.sub(r'\n+', r'.', text)
+        text = re.sub(r';', r'.', text)
+        text = re.sub(r'\.+', r' . ', text)
+        #text = re.sub(r"['\",\?:\-!-]", "", text)
+        text = text.replace('|', '.')
+        text = text.strip()
+        text = " ".join(text.split()).lower()
+        return text
     
     def save(self, output_path='retrieval/saved'):
         if not os.path.exists(output_path):
@@ -58,12 +70,3 @@ class DocIR:
             pickle.dump(self.vectorizer, file)
         with open(os.path.join(output_path, 'tfidf_corpus_vector.pkl'), "wb") as file:
             pickle.dump(self.corpus_vectorize, file)
-
-    @staticmethod
-    def clean(text):
-        text = re.sub(r'\n+', r'.', text)
-        text = re.sub(r'\.+', r' . ', text)
-        #text = re.sub(r"['\",\?:\-!-]", "", text)
-        text = text.strip()
-        text = " ".join(text.split())
-        return text
